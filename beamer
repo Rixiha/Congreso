@@ -1,0 +1,163 @@
+\RequirePackage{xcolor}
+\documentclass{beamer}
+\usepackage{ragged2e} 
+\usepackage{multicol,subfig}
+\usepackage{graphicx,url,hyperref,doi}
+\hypersetup{hidelinks} 
+\usepackage[spanish]{babel}   
+\usepackage[utf8]{inputenc}
+\usepackage[sort&compress,numbers]{natbib}
+\usepackage[font=small,labelfont=bf]{caption}
+
+\usepackage{tikz}
+\tikzstyle{elem} = [draw, rectangle, ultra thin, minimum height=2em, minimum width=2em]
+\tikzstyle{line} = [draw, thick, -stealth, shorten >=1pt]
+
+\titlegraphic { 
+\begin{tikzpicture}[overlay,remember picture]
+\node[right=0.2cm] at (current page.150){
+    \includegraphics[width=3cm]{uanl.png}
+};
+\node[left=0.2cm] at (current page.30){
+    \includegraphics[width=3cm]{fime.png}
+};
+\end{tikzpicture}
+}
+
+\title{Simulación de epidemias bajo medidas de contingencia}
+\author{Avril Mejía$^\dagger$, Elisa Schaeffer$^\ddagger$}
+\institute {$^\dagger$Ingeniería en Sistemas Digitales, $^\ddagger$Posgrado en Ingeniería de Sistemas}
+\date{27 de octubre de 2021}
+
+\begin{document}
+
+\logo{
+\includegraphics[height=1cm]{verano2021.png}
+\hspace{7.3cm}
+\includegraphics[height=1cm]{ipn.png}
+\hspace{.7cm}
+}
+
+\frame{\titlepage}
+\begin{center}
+\begin{frame}
+\frametitle{Resumen}
+Se busca implementar modelos del comportamiento de epidemias en una población mediante técnicas de simulación multi-agente, incorporando medidas de contingencia. El objetivo es identificar hasta qué grado diversos factores propician o disminuyen el número de contagios, y con ello, apoyar la toma de decisiones de salud pública.
+\end{frame}
+\end{center}
+
+\begin{frame}
+\frametitle{Introducción}
+\justify
+La humanidad ha sido asediada por enfermedades infecciosas a lo largo de la historia. Ejemplos en la era moderna incluye el SARS CoV-2, virus que causa la enfermedad conocida como \emph{covid-19}. Ante estas eventualidades, gobiernos de distintos niveles deben adoptar medidas prontas y efectivas para evitar una crisis de salud pública. Surge la necesidad de realizar ensayos computacionales mediante modelos matemáticos de la enfermedad. La naturaleza aleatoria y evolutiva de los procesos de contagio hace de las simulaciones estocásticas una de las maneras más efectivas de estudiar y predecir el fenómeno.
+\end{frame}
+
+\begin{frame}
+\frametitle{Hipótesis}
+\begin{center}
+Las técnicas de simulación multi-agente permiten analizar y cuantificar los efectos de distintas medidas ante la propagación de enfermedades, de manera que permite una toma de decisiones más informada y con mejores resultados.
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Objetivos}
+\justify
+El objetivo general es diseñar, implementar y analizar una simulación multi-agente epidemiológica que permita medir los efectos que tienen distintas medidas de contención contra el contagio y propagación de una enfermedad infecciosa.\par
+Los \emph{objetivos específicos} para el presente proyecto son:\par
+\begin{itemize}
+  \item \textbf{Modelado matemático} Modelado matemático. Diseñar e implementar una simulación multiagente de un modelo epidemiológico.
+  \item \textbf{Software abierto} Implementar un prototipo computacional para explorar los efectos de distintas medidas de contingencia.
+  \item \textbf{Visualización científica} Cuantificar y visualizar los efectos de las diversas medidas para evitar la propagación del virus.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Antecedentes}
+\justify
+Los modelos matemáticos para el estudio de epidemias han sido estudiados por décadas \cite{decadas}. Varios buscan predecir el tamaño final de una epidemia con alguna probabilidad, así como otros buscando controlar el contagio \cite{contagio}, mientras otros han estudiado el impacto de las medidas de contención de la propagación del virus \cite{virus}. En el caso específico de las simulaciones multi-agente, además de ser usadas para el estudio de epidemias \cite{epidemias} también se han usado para abordar problemas de transporte \cite{transporte} o finanzas \cite{finanzas}.
+\end{frame}
+
+\begin{frame}
+\frametitle{Antecedentes}
+\justify
+La figura \ref{diag} muestra el modelo SIR, el cual es un modelo epidemiológico usado para predecir el comportamiento de una epidemia. Recibe su nombre de las iniciales de individuos susceptibles (S), infectados (I) y recuperados (R), asimismo se basa en estos tres puntos principales para capturar muchas de las características típicas de los brotes epidémicos.
+
+\begin{figure}
+\captionsetup{type=figure}
+\setcounter{figure}{0}
+\begin{center}
+    \begin{tikzpicture}[]
+    \node (n1) [elem] {S};
+    \node (n2) [elem, right of=n1, xshift=1cm] {I};
+    \node (n3) [elem, right of=n2, xshift=1cm] {R};
+    \draw [line] (n1) -- (n2);
+    \draw [line] (n2) -- (n3);
+    \end{tikzpicture}
+\end{center}
+\caption{Modelo SIR}
+\label{diag}
+\end{figure}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Solución propuesta}
+\justify
+Primero, se establecerán los parámetros epidémicos y demográficos, mediante una revisión de la literatura. Teniendo definidos los parámetros, se procede a diseñar la simulación multiagente, basándonos en técnicas existentes \cite{transporte}. Con la finalidad de medir el impacto en el número de infectados, se realizarán simulaciones variando parámetros como la probabilidad
+de contagio, y se incorporarán intervenciones como uso de cubrebocas, distanciamiento social, o la introducción de una vacuna con un porcentaje ajustable de efectividad. También se medirá el efecto de las intervenciones con respecto al momento en que se llevan acabo.
+\end{frame}
+
+\begin{frame}
+\frametitle{Herramientas}
+\begin{center}
+Como herramienta principal se tiene \textbf{Python 3.8} \citep{python}, el cual es un lenguaje de programación multiparadigma.
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Experimentos}
+\justify
+Inicialmente, la cantidad de infectados y recuperados es cero, mientras que toda la población es susceptible.\par
+Si bien es cierto que la vacuna no previene un contagio, también lo es que los individuos vacunados se vuelven menos susceptibles a contraer los síntomas de la enfermedad infecciosa. Por otro lado, la población infectada y recuperada ha aumentado conforme avanza esta crisis sanitaria, como se puede apreciar en la figura \ref{imagen}.
+\end{frame}
+
+\begin{frame}
+\begin{figure}[h]
+\setcounter{figure}{1}
+\captionsetup{type=figure}
+\begin{center}
+   \includegraphics[width=7.5cm]{imagen.png}
+   \end{center}
+    \caption{\tiny{Modelo que permite conocer el impacto de distintas intervenciones para facilitar la posible toma de decisiones ante la propagación de una enfermedad infecciosa}}
+    \label{imagen}
+    \centering
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusiones}
+\begin{center}
+Al agregar medidas de contingencia en modelos epidemiológicos como el que proponemos permitirá explorar sus efectos de forma cuantitativa.
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Agradecimientos}
+\justify
+{\small Esta propuesta continúa la investigación iniciada en los proyectos PAICyT IT512-15 \emph{Herramientas computacionales para análisis epidemiológico multifactorial} y PAICyT CE1421-20 \emph{Exploración algorítmica de relaciones entre calidad de aire y bienestar}.
+    
+    Por su parte, la autora agradece al Instituto Politécnico Nacional por el otorgamiento de la beca, asimismo al Programa Delfín por brindarle la oportunidad de participar en este verano científico.
+
+    La presentación se preparó con \url{https://www.overleaf.com/}.}
+\end{frame}
+
+\begin{frame}
+\scriptsize
+\justify
+\bibliography{poster}
+\bibliographystyle{plainnat}
+\end{frame}
+
+\end{document}
